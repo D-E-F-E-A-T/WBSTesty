@@ -436,4 +436,241 @@ function wbstesty_custom_excerpt() {
 	echo $excerpt . $button;
 }
 
+/**
+ * Custom WP_Widget instance. This Widget outputs a a list the latest posts. 
+ *
+ * @since WBS Testy 1.0
+ *
+ */
+class wbstesty_widget_latest_posts extends WP_Widget {
+ 
+    /**
+     * Sets up a new Latest Posts widget instance.
+     *
+     * @since 1.0
+     * @access public
+     */
+    public function __construct() {
+        $widget_ops = array(
+            'classname' => 'widget_latest_posts',
+            'description' => __( 'Your Site&#8217;s Latest Posts.' ),
+            'customize_selective_refresh' => true,
+        );
+        parent::__construct( 'latest-posts', __( 'Latest Posts' ), $widget_ops );
+        $this->alt_option_name = 'widget_recent_entries';
+    }
+ 
+    /**
+     * Outputs the content for the current Latest Posts widget instance.
+     *
+     * @since 1.0
+     * @access public
+     *
+     * @param array $args     Display arguments including 'before_title', 'after_title',
+     *                        'before_widget', and 'after_widget'.
+     * @param array $instance Settings for the current Latest Posts widget instance.
+     */
+    public function widget( $args, $instance ) {
+        if ( ! isset( $args['widget_id'] ) ) {
+            $args['widget_id'] = $this->id;
+        }
+ 
+        $title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Latest Posts' );
+ 
+        /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
+        $title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+ 
+        $number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 4;
+        if ( ! $number )
+            $number = 4;
+ 
+        /**
+         * Filters the arguments for the Latest Posts widget.
+         *
+         * @since 1.0
+         *
+         * @see WP_Query::get_posts()
+         *
+         * @param array $args An array of arguments used to retrieve the recent posts.
+         */
+        $r = new WP_Query( apply_filters( 'widget_posts_args', array(
+            'posts_per_page'      => $number,
+            'no_found_rows'       => true,
+            'post_status'         => 'publish',
+            'ignore_sticky_posts' => true
+        ) ) );
+ 
+        if ($r->have_posts()) :
+        ?>
+        <?php echo $args['before_widget']; ?>
+        <?php if ( $title ) {
+            echo $args['before_title'] . $title . $args['after_title'];
+        } ?>
+        <ul>
+        <?php while ( $r->have_posts() ) : $r->the_post(); ?>
+            <li>
+                <a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?></a>
+                <span class="post-category"><?php the_category( ', ')?></span>
+				<span class="post-date"><?php echo get_the_date('d / m / y'); ?></span>
+            </li>
+        <?php endwhile; ?>
+        </ul>
+        <?php echo $args['after_widget']; ?>
+        <?php
+        // Reset the global $the_post as this query will have stomped on it
+        wp_reset_postdata();
+ 
+        endif;
+    }
+ 
+    /**
+     * Handles updating the settings for the current Latest Posts widget instance.
+     *
+     * @since 1.0
+     * @access public
+     *
+     * @param array $new_instance New settings for this instance as input by the user via
+     *                            WP_Widget::form().
+     * @param array $old_instance Old settings for this instance.
+     * @return array Updated settings to save.
+     */
+    public function update( $new_instance, $old_instance ) {
+        $instance = $old_instance;
+        $instance['title'] = sanitize_text_field( $new_instance['title'] );
+        $instance['number'] = (int) $new_instance['number'];
+        return $instance;
+    }
+ 
+    /**
+     * Outputs the settings form for the Latest Posts widget.
+     *
+     * @since 1.0
+     * @access public
+     *
+     * @param array $instance Current settings.
+     */
+    public function form( $instance ) {
+        $title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : 'Latest Posts';
+        $number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 4;
+?>
+        <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
+ 
+        <p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:' ); ?></label>
+        <input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" /></p>
+ 
+<?php
+    }
+};
 
+/**
+ * Custom WP_Widget instance. This Widget outputs a subscribe to newsletter form. 
+ *
+ * @since WBS Testy 1.0
+ *
+ */
+class wbstesty_widget_newsletter extends WP_Widget {
+
+    /**
+     * Sets up a new Newsletter widget instance.
+     *
+     * @since 1.0
+     * @access public
+     */
+    public function __construct() {
+        $widget_ops = array(
+            'classname' => 'widget_newsletter',
+            'description' => __( 'Your Site&#8217;s Opt In Form.' ),
+            'customize_selective_refresh' => true,
+        );
+        parent::__construct( 'newsletter', __( 'Newsletter' ), $widget_ops );
+        $this->alt_option_name = 'widget_newsletter_optin';
+    }
+ 
+    /**
+     * Outputs the content for the current Newsletter widget instance.
+     *
+     * @since 1.0
+     * @access public
+     *
+     * @param array $args     Display arguments including 'before_title', 'after_title',
+     *                        'before_widget', and 'after_widget'.
+     * @param array $instance Settings for the current Newsletter widget instance.
+     */
+    public function widget( $args, $instance ) {
+        if ( ! isset( $args['widget_id'] ) ) {
+            $args['widget_id'] = $this->id;
+        }
+ 
+        $title = ( ! empty( $instance['title'] ) ) ? $instance['title'] : __( 'Subscribe' );
+ 
+        /** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
+        $title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+ 
+        $optin_description = ( ! empty( $instance['optin_description'] ) ) ? $instance['optin_description'] : __( 'Join Our Newsletter And Get
+ Unlimited Access To Our Guides' );
+		$call_to_action = ( ! empty( $instance['call_to_action'] ) ) ? $instance['call_to_action'] : __( 'Join Now' );
+        ?>
+        <?php echo $args['before_widget']; ?>
+        <?php if ( $title ) {
+            echo $args['before_title'] . $title . $args['after_title'];
+        } ?>
+		<?php if ( $optin_description ) {
+            echo $optin_description;
+        } ?>       
+		<form id="contact-form" method="post" action="">
+			<input type="email" name="your-email" id="email" placeholder="Your email..." required>
+			<button type="submit"> <?php echo $call_to_action; ?></button>
+		</form>
+        <?php echo $args['after_widget']; ?>
+        <?php
+    }
+ 
+    /**
+     * Handles updating the settings for the current Newsletter widget instance.
+     *
+     * @since 1.0
+     * @access public
+     *
+     * @param array $new_instance New settings for this instance as input by the user via
+     *                            WP_Widget::form().
+     * @param array $old_instance Old settings for this instance.
+     * @return array Updated settings to save.
+     */
+    public function update( $new_instance, $old_instance ) {
+        $instance = $old_instance;
+        $instance['title'] = sanitize_text_field( $new_instance['title'] );
+        $instance['optin_description'] = sanitize_text_field( $new_instance['optin_description'] );
+		$instance['call_to_action'] = sanitize_text_field( $new_instance['call_to_action'] );
+        return $instance;
+    }
+ 
+    /**
+     * Outputs the settings form for the Newsletter widget.
+     *
+     * @since 1.0
+     * @access public
+     *
+     * @param array $instance Current settings.
+     */
+    public function form( $instance ) {
+        $title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : 'Subscribe';
+        $optin_description    = isset( $instance['optin_description'] ) ? esc_attr(  $instance['optin_description'] ) : 'Join Our Newsletter And Get
+ Unlimited Access To Our Guides';
+        $call_to_action = isset( $instance['call_to_action'] ) ? esc_attr(  $instance['call_to_action'] ) : 'Join Now';
+?>
+        <p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
+ 
+        <p><label for="<?php echo $this->get_field_id( 'optin_description' ); ?>"><?php _e( 'Newsletter description text:' ); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id( 'optin_description' ); ?>" name="<?php echo $this->get_field_name( 'optin_description' ); ?>" type="text" value="<?php echo $optin_description; ?>" /></p>
+		
+	    <p><label for="<?php echo $this->get_field_id( 'call_to_action' ); ?>"><?php _e( 'Newsletter call to action button text:' ); ?></label>
+        <input class="widefat" id="<?php echo $this->get_field_id( 'call_to_action' ); ?>" name="<?php echo $this->get_field_name( 'call_to_action' ); ?>" type="text" value="<?php echo $call_to_action; ?>" /></p>
+
+<?php
+    }
+};
+
+add_action( 'widgets_init', function(){ register_widget( 'wbstesty_widget_latest_posts' );});
+add_action( 'widgets_init', function(){ register_widget( 'wbstesty_widget_newsletter' );});
