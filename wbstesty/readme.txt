@@ -1,4 +1,5 @@
 === WBS Testy ===
+Author:Elisavet Triantafyllopoulou
 Contributors: the WordPress team
 Requires at least: WordPress 4.4
 Tested up to: WordPress 4.5
@@ -22,7 +23,8 @@ WBS Testy as is a modernized take on an ever-popular WordPress layout — the ho
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 * Tags: one-column, two-columns, right-sidebar, accessibility-ready, custom-background, custom-colors, custom-header, custom-menu, editor-style, featured-images, flexible-header, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready, blog
 * Text Domain: wbstesty
-* This theme, like WordPress, is licensed under the GPL. Use it to make something cool, have fun, and share what you've learned with others.
+
+This theme, like WordPress, is licensed under the GPL. Use it to make something cool, have fun, and share what you've learned with others.
 
 * Mobile-first, Responsive Layout
 * Custom Colors
@@ -30,8 +32,6 @@ WBS Testy as is a modernized take on an ever-popular WordPress layout — the ho
 * Social Links
 * Post Formats
 * The GPL v2.0 or later license. :) Use it to make something cool.
-
-For more information about WBS Testy please go to https://codex.wordpress.org/Twenty_Sixteen.
 
 == Installation ==
 
