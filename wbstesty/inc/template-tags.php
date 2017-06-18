@@ -242,13 +242,21 @@ if ( ! function_exists( 'wbstesty_the_custom_logo' ) ) :
 /**
  * Displays the optional custom logo.
  *
- * Does nothing if the custom logo is not available.
+ * If the custom logo is not available, shows site title and description.*
  *
- * @since WBS Testy 1.2
+ * @since WBS Testy 1.0
  */
-function wbstesty_the_custom_logo() {
-	if ( function_exists( 'the_custom_logo' ) ) {
-		the_custom_logo();
-	}
-}
+	function wbstesty_the_custom_logo(){ 	
+     if ( get_theme_mod( 'wbstesty_logo' ) ) : ?>
+		<div class='site-logo'>
+			<a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><img src='<?php echo esc_url( get_theme_mod( 'wbstesty_logo' ) ); ?>' alt='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>'></a>
+		</div>
+	<?php else : ?>
+		<hgroup>
+			<h1 class='site-title'><a href='<?php echo esc_url( home_url( '/' ) ); ?>' title='<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>' rel='home'><?php bloginfo( 'name' ); ?></a></h1>
+			<h2 class='site-description'><?php bloginfo( 'description' ); ?></h2>
+		</hgroup>
+	<?php endif; 
+	};
 endif;
+?>

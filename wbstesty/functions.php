@@ -437,7 +437,7 @@ function wbstesty_custom_excerpt() {
 }
 
 /**
- * Custom WP_Widget instance. This Widget outputs a a list the latest posts. 
+ * Custom WP_Widget instance. This Widget outputs a list of the latest posts. 
  *
  * @since WBS Testy 1.0
  *
