@@ -13,12 +13,12 @@
 		</div><!-- .site-content -->
 
 		<footer id="colophon" class="site-footer" role="contentinfo">
-			<?php if ( has_nav_menu( 'primary' ) ) : ?>
-				<nav class="main-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Footer Primary Menu', 'wbstesty' ); ?>">
+			<?php if ( has_nav_menu( 'footer' )  ) : ?>
+				<nav class="footer-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Footer Menu', 'wbstesty' ); ?>">
 					<?php
 						wp_nav_menu( array(
-							'theme_location' => 'primary',
-							'menu_class'     => 'primary-menu',
+							'theme_location' => 'footer',
+							'menu_class'     => 'menu-footer',
 						 ) );
 					?>
 				</nav><!-- .main-navigation -->

@@ -67,14 +67,27 @@ function wbstesty_setup() {
 	/*
 	 * Enable support for custom logo.
 	 *
-	 *  @since WBS Testy 1.2
+	 *  @since WBS Testy 1.0
 	 */
-	add_theme_support( 'custom-logo', array(
-		'height'      => 240,
-		'width'       => 240,
-		'flex-height' => true,
-	) );
+	
+	function wbstesty_theme_logo_customizer( $wp_customize ) {
+    	$wp_customize->add_section( 'wbstesty_logo_section' , array(
+		'title'       => __( 'Logo', 'wbstesty' ),
+		'priority'    => 30,
+		'description' => __( 'Upload a logo to replace the default site name and description in the header', 'wbstesty' )
+		) );
+		
+		$wp_customize->add_setting( 'wbstesty_logo' );
+		
+		$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'wbstesty_logo', array(
+		'label'    => __( 'Logo', 'wbstesty' ),
+		'section'  => 'wbstesty_logo_section',
+		'settings' => 'wbstesty_logo',
+		) ) );
+	};
+	add_action( 'customize_register', 'wbstesty_theme_logo_customizer' );
 
+	
 	/*
 	 * Enable support for Post Thumbnails on posts and pages.
 	 *
@@ -85,8 +98,8 @@ function wbstesty_setup() {
 
 	// This theme uses wp_nav_menu() in two locations.
 	register_nav_menus( array(
-		'primary' => __( 'Primary Menu', 'wbstesty' ),
-		'social'  => __( 'Social Links Menu', 'wbstesty' ),
+		'primary' => __( 'Primary Menu on Header', 'wbstesty' ),
+		'footer'  => __( 'Footer Menu', 'wbstesty' ),
 	) );
 
 	/*
@@ -122,7 +135,7 @@ function wbstesty_setup() {
 	 * This theme styles the visual editor to resemble the theme style,
 	 * specifically font, colors, icons, and column width.
 	 */
-	add_editor_style( array( 'css/editor-style.css', wbstesty_fonts_url() ) );
+	add_editor_style( array( 'css/editor-style.css') );
 
 	// Indicate widget sidebars can use selective refresh in the Customizer.
 	add_theme_support( 'customize-selective-refresh-widgets' );
@@ -184,47 +197,6 @@ function wbstesty_widgets_init() {
 }
 add_action( 'widgets_init', 'wbstesty_widgets_init' );
 
-if ( ! function_exists( 'wbstesty_fonts_url' ) ) :
-/**
- * Register Google fonts for WBS Testy.
- *
- * Create your own wbstesty_fonts_url() function to override in a child theme.
- *
- * @since WBS Testy 1.0
- *
- * @return string Google fonts URL for the theme.
- */
-function wbstesty_fonts_url() {
-	$fonts_url = '';
-	$fonts     = array();
-	$subsets   = 'latin,latin-ext';
-
-	/* translators: If there are characters in your language that are not supported by Merriweather, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Merriweather font: on or off', 'wbstesty' ) ) {
-		$fonts[] = 'Merriweather:400,700,900,400italic,700italic,900italic';
-	}
-
-	/* translators: If there are characters in your language that are not supported by Montserrat, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Montserrat font: on or off', 'wbstesty' ) ) {
-		$fonts[] = 'Montserrat:400,700';
-	}
-
-	/* translators: If there are characters in your language that are not supported by Inconsolata, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Inconsolata font: on or off', 'wbstesty' ) ) {
-		$fonts[] = 'Inconsolata:400';
-	}
-
-	if ( $fonts ) {
-		$fonts_url = add_query_arg( array(
-			'family' => urlencode( implode( '|', $fonts ) ),
-			'subset' => urlencode( $subsets ),
-		), 'https://fonts.googleapis.com/css' );
-	}
-
-	return $fonts_url;
-}
-endif;
-
 /**
  * Handles JavaScript detection.
  *
@@ -244,7 +216,6 @@ add_action( 'wp_head', 'wbstesty_javascript_detection', 0 );
  */
 function wbstesty_scripts() {
 	// Add custom fonts, used in the main stylesheet.
-	//wp_enqueue_style( 'wbstesty-fonts', wbstesty_fonts_url(), array(), null );
     wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Roboto+Slab', false ); 
 
 	// Add Genericons, used in the main stylesheet.
@@ -437,7 +408,7 @@ function wbstesty_custom_excerpt() {
 }
 
 /**
- * Custom WP_Widget instance. This Widget outputs a list of the latest posts. 
+ * Custom WP_Widget instance. This Widget outputs a a list the latest posts. 
  *
  * @since WBS Testy 1.0
  *

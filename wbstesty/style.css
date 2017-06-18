@@ -796,24 +796,24 @@ a:active {
 	display: block;
 }
 
-.main-navigation {
+.main-navigation, .footer-navigation {
 	font-family: 'Roboto Slab', serif;}
 
 .site-footer .main-navigation {
 	margin-bottom: 1.75em;
 }
 
-.main-navigation ul {
+.main-navigation ul, .footer-navigation ul {
 	list-style: none;
 	margin: 0;
 }
 
-.main-navigation li {
+.main-navigation li, .footer-navigation li {
 	border-top: 1px solid #d1d1d1;
 	position: relative;
 }
 
-.main-navigation a {
+.main-navigation a , .footer-navigation a{
 	color: #1a1a1a;
 	display: block;
 	line-height: 1.3125;
@@ -822,21 +822,26 @@ a:active {
 }
 
 .main-navigation a:hover,
-.main-navigation a:focus {
+.main-navigation a:focus,
+.footer-navigation a:hover,
+.footer-navigation a:focus{
 	color: #007acc;
 }
 
 .main-navigation .current-menu-item > a,
-.main-navigation .current-menu-ancestor > a {
+.main-navigation .current-menu-ancestor > a,
+.footer-navigation .current-menu-item > a,
+.footer-navigation .current-menu-ancestor > a  {
 	font-weight: 700;
+	color:#1B75BB;
 }
 
-.main-navigation ul ul {
+.main-navigation ul ul, .footer-navigation ul ul, {
 	display: none;
 	margin-left: 0.875em;
 }
 
-.no-js .main-navigation ul ul {
+.no-js .main-navigation ul ul, .no-js .footer-navigation ul ul {
 	display: block;
 }
 
@@ -2834,28 +2839,46 @@ p > video {
 	.main-navigation {
 		margin: 0 -0.875em;
 	}
-
+	
+	.footer-navigation {
+		width:98%;
+		float:left;
+		clear:both;
+		margin:0 auto;
+		
+	}
+	.footer-navigation .menu-footer{
+		margin:0 auto;
+	}
 	.main-navigation .primary-menu,
-	.main-navigation .primary-menu > li {
+	.main-navigation .primary-menu > li,
+	.footer-navigation .menu-footer,
+	.footer-navigation .menu-footer > li
+
+	{
 		border: 0;
 	}
 
-	.main-navigation .primary-menu > li {
+	.main-navigation .primary-menu > li,
+    .footer-navigation .menu-footer > li	{
 		float: left;
 	}
 
-	.main-navigation a {
+	.main-navigation a,
+    .footer-navigation a	{
 		outline-offset: -8px;
 		padding: 0.65625em 0.875em;
 		white-space: nowrap;
 	}
 
 	.main-navigation li:hover > a,
-	.main-navigation li.focus > a {
+	.main-navigation li.focus > a,
+	.footer-navigation li:hover > a,
+	.footer-navigation li.focus > a{
 		color: #007acc;
 	}
 
-	.main-navigation ul ul {
+	.main-navigation ul ul, .footer-navigation ul ul {
 		border-bottom: 1px solid #d1d1d1;
 		display: block;
 		left: -999em;
@@ -2949,6 +2972,8 @@ p > video {
 	.site-footer .main-navigation {
 		display: none;
 	}
+	
+	
 
 	.site-content {
 		padding: 0 4.5455%;
@@ -3451,6 +3476,7 @@ p > video {
 	textarea,
 	.navigation,
 	.main-navigation,
+	.footer-navigation,
 	.social-navigation,
 	.sidebar,
 	.content-bottom-widgets,
