@@ -138,6 +138,10 @@ div.bookmaker{
 	padding:10px;
 }
 
+.edit-post{
+	clear:both; 
+	margin-top:3em;
+}
 /**
  * 1.0 - Normalize
  *
@@ -1003,12 +1007,12 @@ a:active {
 }
 
 .site-footer .social-navigation {
-	margin-bottom: 1.75em;
+	margin: 2em 0;
 }
 
 .social-navigation ul {
 	list-style: none;
-	margin: 0 0 -0.4375em;
+	margin: 2em 0 -0.4375em;
 }
 
 .social-navigation li {
@@ -1018,8 +1022,7 @@ a:active {
 
 .social-navigation a {
 	border: 1px solid #d1d1d1;
-	border-radius: 50%;
-	color: #1a1a1a;
+	color: #000000;
 	display: block;
 	height: 35px;
 	position: relative;
@@ -1662,13 +1665,14 @@ blockquote:after,
  */
 
 .site {
-	background-color: #fff;
+	background-color: #f4f5f5;
 }
 
 .site-inner {
 	margin: 0 auto;
 	max-width: 1320px;
 	position: relative;
+
 }
 
 .site-content {

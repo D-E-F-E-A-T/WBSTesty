@@ -44,5 +44,6 @@
 </div><!-- .site -->
 
 <?php wp_footer(); ?>
+<script async defer src="//assets.pinterest.com/js/pinit.js"></script>
 </body>
 </html>

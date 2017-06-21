@@ -390,6 +390,25 @@ function wbstesty_custom_excerpt() {
 }
 
 /**
+ * Echo's the header meta useful for sharing the page on Facebook
+ *
+ * @since WBS Testy 1.0
+ *
+ * @echo string The Custom header meta if the singular (post, attachment, page)
+ */
+function wbstesty_custom_ogmeta() {
+	if ( is_singular() ) {
+		echo '<!-- You can use Open Graph tags to customize link previews.';
+		echo 'Learn more: https://developers.facebook.com/docs/sharing/webmasters -->';
+		echo '<meta property="og:url"          content="'. get_permalink(get_the_ID()) . '" />';
+		echo '<meta property="og:type"          content="website" />';
+		echo '<meta property="og:title"         content="' . get_the_title() . '" />';
+		echo '<meta property="og:description"   content="' . get_the_excerpt() . '" />';
+		echo '<meta property="og:image"         content="' . wp_get_attachment_url( get_post_thumbnail_id() ) . '" />';
+	}
+}
+
+/**
  * Custom WP_Widget instance. This Widget outputs a a list the latest posts. 
  *
  * @since WBS Testy 1.0
