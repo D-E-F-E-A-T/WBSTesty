@@ -1,7 +1,7 @@
 # WBSTesty
-WBSTesty is a beautiful theme designed to test the candidates of the WBS IKE Front-end Developer Position. 
+WBSTesty is a beautiful theme designed under the  GNU General Public License v2 or later and it is a is a heavily edited version of Wordpress Twenty Sixteen theme that comes bundled with Wordpress and designed by the Wordpress Team.
 
-Theme Name: WBS Testy
+![WBSTesty Wordpress Theme](https://github.com/elisavetTriant/WBSTesty/blob/master/screenshot.png  "WBSTesty Wordpress Theme")
 
 Theme URI: http://www.wbs.gr/
 
@@ -9,7 +9,7 @@ Author: Elisavet Triantafyllopoulou
 
 Author URI: http://elisavet.co/
 
-Description: WBSTesty is a beautiful theme designed to test the candidates of the WBS IKE Front-end Developer Position. This theme is a heavily edited version of Wordpress Twenty Sixteen theme that comes bundled with Wordpress and designed by the Wordpress Team. Perfect for a starter theme!
+Description: This theme is a heavily edited version of Wordpress Twenty Sixteen theme that comes bundled with Wordpress and designed by the Wordpress Team. Perfect for a starter theme!
 
 Version: 1.0
 
